@@ -1,38 +1,41 @@
 ﻿#include <iostream>
-#include <string>
-
+#include <bitset>
 using namespace std;
 
-string multiplyStrings(string num1, string num2) {
-    int n = num1.size();
-    int m = num2.size();
-    string result(n + m, '0');
 
-    for (int i = n - 1; i >= 0; i--) {
-        for (int j = m - 1; j >= 0; j--) {
-            int mul = (num1[i] - '0') * (num2[j] - '0');
-            int sum = mul + (result[i + j + 1] - '0');
-            result[i + j + 1] = (sum % 10) + '0';
-            result[i + j] += sum / 10;
-        }
-    }
-
-    size_t startPos = result.find_first_not_of('0');
-    if (startPos != string::npos) {
-        return result.substr(startPos);
-    }
-
-    return "0";
+string bitwise_add(string num1, string num2) {
+    int n1 = bitset<8>(num1).to_ulong();
+    int n2 = bitset<8>(num2).to_ulong();
+    return bitset<8>(n1 + n2).to_string();
 }
 
+
+string bitwise_sub(string num1, string num2) {
+    int n1 = bitset<8>(num1).to_ulong(); 
+    int n2 = bitset<8>(num2).to_ulong();
+    return bitset<8>(n1 - n2).to_string(); 
+}
+
+// Функция для поразрядного умножения двоичных чисел
+string bitwise_mul(string num1, string num2) {
+    int n1 = bitset<8>(num1).to_ulong(); 
+    int n2 = bitset<8>(num2).to_ulong(); 
+    return bitset<8>(n1 * n2).to_string(); 
+}
+
+string bitwise_div(string num1, string num2) {
+    int n1 = bitset<8>(num1).to_ulong();
+    int n2 = bitset<8>(num2).to_ulong();
+    return bitset<8>(n1 / n2).to_string();
+}
 int main() {
-    setlocale(LC_ALL, "RUS");
-    string num1 = "5";
-    string num2 = "12";
+    string num1 = "1011101"; 
+    string num2 = "1001011";
 
-    string result = multiplyStrings(num1, num2);
-
-    cout << "Результат Умножения: " << result << endl;
+    cout << "Bitwise Addition: " << bitwise_add(num1, num2) << endl;
+    cout << "Bitwise Subtraction: " << bitwise_sub(num1, num2) << endl;
+    cout << "Bitwise Multiplication: " << bitwise_mul(num1, num2) << endl;
+    cout << "Bitwise Division: " << bitwise_div(num1, num2) << endl;
 
     return 0;
 }
